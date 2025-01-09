@@ -97,11 +97,11 @@ Berdasarkan tabel diatas, terdapat 15 Kolom dan 973 baris data.
 - `Experience_Level` -> tingkat pengalaman member, (1) Beginner, (2) Intermediate, dan (3) Expert
 - `BMI` -> Body Mass Index, dihitung dari tinggi dan berat
 
-### Data Preprocessing
-Tahap *data preparation* merupakan proses transformasi data menjadi bentuk yang dapat diterima oleh model *machine learning* nanti. Proses *data preparation* yang dilakukan, yaitu `Mengubah dan menghapus beberapa fitur yang tidak diperlukan`, `membersihkan data missing value`, `melakukan pengecekan dan pembersihan data duplikat`.
+## Data Preparation
+Data Preparation merupakan proses untuk mempersiapkan data sebelum dilakukan tahap pembuatan model machine learning. Pada tahap ini dilakukan proses `Feature Engineering`, `Data Cleaning`, dan `Data Splitting`.
 
-####  Feature Engineering
-*Feature engineering* merupakan tahap untuk `menambah`, `mengubah` atau `menghapus` beberapa fitur data agar kualitas data lebih baik. Pada tahap ini, dilakukan beberapa perubahan seperti penyederhanaan penamaan untuk kolom `Weight (kg)`, `Height (m)`, `Session_Duration (hours)`, dan `Workout_Frequency (days/week)`. Kemudian, data pada kolom `Workout_Type` tidak relevan dengan parameter lainnya sehingga dihapus bersamaan dengan kolom `Max_BPM`, `Resting_BPM`, `Fat_Percentage, Water_Intake (liters)`. Terakhir ditambahkan data `User_ID`, `Workout_ID`, beserta `Goal`, `Workout Type`, `Workout_Name` berdasarkan parameter `Calories_Burned`, `Avg_BPM`, `Level Experience`. Berikut hasil dataset baru.
+###  Feature Engineering
+*Feature engineering* merupakan proses transformasi data dengan `menambah`, `mengubah` dan `menghapus` beberapa fitur agar kualitas data menjadi lebih baik dan dapat diterima oleh model machine learning nantinya. Pada tahap ini, dilakukan beberapa perubahan seperti penyederhanaan penamaan untuk kolom `Weight (kg)`, `Height (m)`, `Session_Duration (hours)`, dan `Workout_Frequency (days/week)`. Kemudian, data pada kolom `Workout_Type` tidak relevan dengan parameter lainnya sehingga dihapus bersamaan dengan kolom `Max_BPM`, `Resting_BPM`, `Fat_Percentage, Water_Intake (liters)`. Terakhir ditambahkan data `User_ID`, `Workout_ID`, beserta `Goal`, `Workout Type`, `Workout_Name` berdasarkan parameter `Calories_Burned`, `Avg_BPM`, `Level Experience`. Berikut hasil dataset baru.
 
 <div align='center'>
   
@@ -116,15 +116,39 @@ Tahap *data preparation* merupakan proses transformasi data menjadi bentuk yang 
 
 </div>
 
-#### Data Cleaning
-Data cleaning merupakan tahap untuk membersihkan data dari *missing value*, *outlier* dan data duplikat. Setelah dilakukan pemeriksaan menggunakan fungsi `isnull().sum()` dan `duplicated().sum()`, tidak terdapat missing value maupun data duplikasi pada dataset.
+### Data Cleaning
+Data Cleaning merupakan Proses untuk `membersihkan data dari missing value` dan `data duplikat` yang dapat mempengaruhi peforma model *machine learning*. Setelah dilakukan pemeriksaan menggunakan fungsi `isnull().sum()` dan `duplicated().sum()`, tidak terdapat missing value maupun data duplikasi pada dataset.
 
-## Data Preparation
-Tahap ini merupakan proses untuk mempersiapkan data sebelum dilakukan tahap pembuatan model *machine learning*. Pada dataset ini tidak terdapat data rating secara eksplisit seperti penilaian rating 1 hingga 5 terhadap workout yang dilakukan oleh user sehingga perlu data dalam tipe numerik agar dapat digunakan pada metode `Colaborative Filtering`, hal ini yang disebut dengan `data rating secara implisit`. pada dataset terdapat beberapa parameter yang dapat dijadikan data rating seperti `Avg_BPM`, `Calories_Burned`, `Duration`, `Frequency`, dan `Level`. hal ini dapat dilihat pada tabel 4. Parameter diatas telah dinormalisasi menggunakan fungsi `MinMaxScaler` dan rata-rata hasilnya disimpan pada kolom `Aggregate`.
+### Data Splitting
+
+*Data Splitting* merupkan proses pembagian data berdasarkan kebutuhan untuk sistem rekomendasi. pada proses ini, data dibagi menjadi 3 yaitu `Data User` yang berisi ragam informasi mengenai user dapat dilihat pada tabel 4, `Data Workout` yang berisi ragam informasi mengenai Workout dapat dilihat pada tabel 5, dan `Data Feedback` sebagai data `rating implisit` dapat dilihat pada tabel 6. 
 
 <div align='center'>
   
-  Tabel 4. Data Feedback
+  Tabel 4. Data User
+|  | User_ID | Age | Gender | Height | Weight | BMI | Goal |
+| ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |
+| 0	| 1	| 56	| 0	| 1.71 | 88.3 | 30.20 |	Weight Loss
+| 1	| 2	| 46 | 1 | 1.53	| 74.9 | 32.00 | Weight Loss
+| 2	| 3	| 32	| 1	| 1.66 | 68.1 |	24.71 |	Flexibility
+| 3	| 4	| 25	| 0 | 1.70 | 53.2 | 18.41 |	Weight Gain
+| 4	| 5	| 38	| 0 | 1.79 | 46.1 | 14.39 |	Weight Gain
+
+  Tabel 5. Data Workout
+|  | Workout_ID | Workout_Name | Workout_Type | Experience_Level |
+| ----- | ----- | ----- | ----- |----- |
+| 0	| 4	| Marathon	| Cardio	| 3	|
+| 1	| 4	| Marathon	| Cardio	| 3	|
+| 2	| 11	| Yoga	| Flexibility	| 1	|
+| 3	| 1	| Bench Press	| Strength | 3|
+| 4	| 1	| Bench Press	| Strength	| 3	|
+
+</div>
+Pada dataset ini tidak terdapat data rating secara eksplisit seperti penilaian rating 1 hingga 5 terhadap workout yang dilakukan oleh user sehingga perlu data dalam tipe numerik agar dapat digunakan pada metode `Colaborative Filtering`, hal ini yang disebut dengan `data rating secara implisit`. pada dataset terdapat beberapa parameter yang dapat dijadikan data rating seperti `Avg_BPM`, `Calories_Burned`, `Duration`, `Frequency`, dan `Level`. hal ini dapat dilihat pada tabel 6. Parameter diatas telah dinormalisasi menggunakan fungsi `MinMaxScaler` dan rata-rata hasilnya disimpan pada kolom `Aggregate`.
+
+<div align='center'>
+  
+  Tabel 6. Data Feedback
 |  | User_ID | Workout_ID | Workout_Name | Workout_Type | Duration | Calories_Burned | Avg_BPM | Frequency | Level | Aggregate |
 | ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- |
 | 0	| 1	| 4	| Marathon	| Cardio	| 0.79	| 0.68	| 0.76	| 0.67	| 1.0	| 0.78	|
@@ -150,7 +174,7 @@ Sistem rekomendasi dengan model collaborative filtering memiliki kelebihan denga
 
 Terdapat beberapa kelebihan dan kekurangan dari kedua metode tersebut. CF membutuhkan banyak feedback dari pengguna agar sistem berfungsi dengan baik. Sementara itu, content based filtering membutuhkan deskripsi item/fitur yang baik. oleh karena itu, diperlukan solusi untuk mengatasi hal tersebut yaitu dengan *Hybrid System*.
 
-Setelah dilakukan perhitungan kemiripan dengan menggunakan fungsi `cosine_similarity`, sistem rekomendasi menggunakan metode CBF menghasilkan 5 top rekomendasi berdasarkan tingkat pengalaman (*Level Experience*) seperti yang ditunjukkan pada tabel 5.
+Perhitungan kemiripan menggunakan fungsi `cosine_similarity` dengan fitur yang digunakan pada proyek ini yakni `durasi`, `jumlah kalori yang terbakar`, `rata-rata BPM`, `frekuensi` dan `level pengalaman user`. Setelah dilakukan perhitungan, sistem rekomendasi menggunakan metode CBF menghasilkan 5 top rekomendasi berdasarkan tingkat pengalaman (*Level Experience*) seperti yang ditunjukkan pada tabel 5.
 
 <div align='center'>
 
