@@ -104,7 +104,7 @@ Data Preparation merupakan proses untuk mempersiapkan data sebelum dilakukan tah
 *Feature engineering* merupakan proses transformasi data dengan `menambah`, `mengubah` dan `menghapus` beberapa fitur agar kualitas data menjadi lebih baik dan dapat diterima oleh model machine learning nantinya.
 
 1. Selection Feature
-Pada tahap ini, dilakukan beberapa perubahan seperti penyederhanaan penamaan untuk kolom `Weight (kg)`, `Height (m)`, `Session_Duration (hours)`, dan `Workout_Frequency (days/week)` menggunakan fungsi `rename()`. Kemudian, data pada kolom `Workout_Type` tidak relevan dengan parameter lainnya sehingga dihapus bersamaan dengan kolom `Max_BPM`, `Resting_BPM`, `Water_Intake (liters)`, `Experience_Level`, `BMI`, dan `Fat_Percentage` menggunakan fungsi `drop()`. dan juga ditambahkan data `User_ID` dengan hasil dapat dilihat pada tabel 3.
+Pada tahap ini, dilakukan beberapa perubahan seperti data pada kolom `Workout_Type` tidak relevan dengan parameter lainnya sehingga dihapus bersamaan dengan kolom `Max_BPM`, `Resting_BPM`, `Water_Intake (liters)`, `Experience_Level`, `BMI`, dan `Fat_Percentage` menggunakan fungsi `drop()`. Kemudian, penyederhanaan penamaan untuk kolom `Weight (kg)`, `Height (m)`, `Session_Duration (hours)`, dan `Workout_Frequency (days/week)` menggunakan fungsi `rename()`. dan juga ditambahkan data `User_ID` dengan hasil dapat dilihat pada tabel 3.
 
 <div align='center'>
   
