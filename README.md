@@ -9,7 +9,7 @@ Dalam beberapa tahun terakhir, minat terhadap kebugaran fisik dan kesehatan tela
   
 ![Image](https://github.com/user-attachments/assets/770d80f9-f86c-4859-aef0-71297cd1e7f6)
 
-Gambar 1. Gym
+Gambar 1. Gym Room
 
 </div>
 
@@ -101,18 +101,52 @@ Berdasarkan tabel diatas, terdapat 15 Kolom dan 973 baris data.
 Data Preparation merupakan proses untuk mempersiapkan data sebelum dilakukan tahap pembuatan model machine learning. Pada tahap ini dilakukan proses `Feature Engineering`, `Data Cleaning`, dan `Data Splitting`.
 
 ###  Feature Engineering
-*Feature engineering* merupakan proses transformasi data dengan `menambah`, `mengubah` dan `menghapus` beberapa fitur agar kualitas data menjadi lebih baik dan dapat diterima oleh model machine learning nantinya. Pada tahap ini, dilakukan beberapa perubahan seperti penyederhanaan penamaan untuk kolom `Weight (kg)`, `Height (m)`, `Session_Duration (hours)`, dan `Workout_Frequency (days/week)`. Kemudian, data pada kolom `Workout_Type` tidak relevan dengan parameter lainnya sehingga dihapus bersamaan dengan kolom `Max_BPM`, `Resting_BPM`, `Fat_Percentage, Water_Intake (liters)`. Terakhir ditambahkan data `User_ID`, `Workout_ID`, beserta `Goal`, `Workout Type`, `Workout_Name` berdasarkan parameter `Calories_Burned`, `Avg_BPM`, `Level Experience`. Berikut hasil dataset baru.
+*Feature engineering* merupakan proses transformasi data dengan `menambah`, `mengubah` dan `menghapus` beberapa fitur agar kualitas data menjadi lebih baik dan dapat diterima oleh model machine learning nantinya.
+
+1. Selection Feature
+Pada tahap ini, dilakukan beberapa perubahan seperti penyederhanaan penamaan untuk kolom `Weight (kg)`, `Height (m)`, `Session_Duration (hours)`, dan `Workout_Frequency (days/week)` menggunakan fungsi `rename()`. Kemudian, data pada kolom `Workout_Type` tidak relevan dengan parameter lainnya sehingga dihapus bersamaan dengan kolom `Max_BPM`, `Resting_BPM`, `Water_Intake (liters)`, `Experience_Level`, `BMI`, dan `Fat_Percentage` menggunakan fungsi `drop()`. dan juga ditambahkan data `User_ID` dengan hasil dapat dilihat pada tabel 3.
 
 <div align='center'>
   
-  Tabel 3. Data setelah dilakukan *Feature Engineering*
-|  | Age | Gender | Weight | Height | Avg_BPM | Duration | Calories_Burned | Frequency | User_ID | BMI | Goal | Workout_Type | Workout_Name | Experience_Level | Workout_ID |
+  Tabel 3. Data setelah dilakukan *Feature Selection*
+|  | Age | Gender | Weight | Height | Avg_BPM | Duration | Calories_Burned | Frequency | User_ID | BMI 
+| ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- |
+| 0 | 56 | Male |  88.3 | 1.71 | 157 | 1.69 | 1313.0 | 4 | 1 | 30.20 |
+| 1 | 46 | Female | 74.9 | 1.53 | 151 | 1.30 | 883.0 | 4 | 2 | 32.00 |
+| 2 | 32 | Female | 68.1 |1.66 | 122 | 1.11 | 677.0 | 4 | 3 | 24.71 |
+| 3 |25 | Male | 53.2 |1.70 | 164 | 0.59 | 532.0 | 3 | 4 | 18.41 |
+| 4 |38 | Male | 46.1 | 1.79 | 158 |  0.64 | 556.0 | 3 | 5 | 14.39 |
+
+</div>
+
+Terakhir ditambahkan data `Goal`, `Workout Type`, `Workout_Name` berdasarkan parameter `Calories_Burned`, `Avg_BPM`, `Level Experience` beserta `Workout_ID`. Hasil dapat dilihat pada tabel 4.
+
+<div align='center'>
+  
+  Tabel 4. Data setelah dilakukan penambahan data `Goal`, `Workout Type`, `Workout_Name` beserta `Workout_ID`,
+|  | Age | Gender | Weight | Height | Avg_BPM | Calories_Burned | Duration | Frequency | User_ID | BMI | Goal | Workout_Type | Workout_Name | Experience_Level | Workout_ID |
 | ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |
-| 0 | 56 | 0 |  88.3 | 1.71 | 157 | 1.69 | 1313.0 | 12.6 | 4 | 1 | 30.20 | Weight Loss | Cardio | Marathon | 3 | 4 | 
-| 1 | 46 | 1 | 74.9 | 1.53 | 151 | 1.30 | 883.0 | 33.9 | 4 | 2 | 32.00 | Weight Loss | Cardio | Walking | 1 | 10 |
-| 2 | 32 | 1 | 68.1 |1.66 | 122 | 1.11 | 677.0 | 33.4 | 4 | 3 | 24.71 | Flexibility | Flexibility | Zumba | 2 | 12 | 
-| 3 |25 | 0 | 53.2 |1.70 | 164 | 0.59 | 532.0 | 28.8 | 3 | 4 | 18.41 | Weight Gain | Strength | Squat | 2 | 9  |
-| 4 |38 | 0 | 46.1 | 1.79 | 158 |  0.64 | 556.0 | 29.2 | 3 | 5 | 14.39 | Weight Gain | Strength | Push Up | 1 | 7 |
+| 0 | 56 | Male |  88.3 | 1.71 | 157 | 1.69 | 1313.0 | 4 | 1 | 30.20 | Weight Loss | Cardio | Walking | 1 | 10 | 
+| 1 | 46 | Female | 74.9 | 1.53 | 151 | 1.30 | 883.0 | 4 | 2 | 32.00 | Weight Loss | Cardio | Marathon | 3 | 4 |
+| 2 | 32 | Female | 68.1 |1.66 | 122 | 1.11 | 677.0 | 4 | 3 | 24.71 | Flexibility | Flexibility | Zumba | 2 | 12 | 
+| 3 |25 | Male | 53.2 |1.70 | 164 | 0.59 | 532.0 | 3 | 4 | 18.41 | Weight Gain | Strength | Squat | 2 | 9  |
+| 4 |38 | Male | 46.1 | 1.79 | 158 |  0.64 | 556.0 | 3 | 5 | 14.39 | Weight Gain | Strength | Push Up | 1 | 7 |
+
+</div>
+
+2. Encoding Feature
+Pada tahap ini, data pada fitur `Gender` diubah dari data string menjadi data numerik dengan menggunakan fungsi `replace()`. hasil dapat dilihat pada tabel 5.
+
+<div align='center'>
+  
+  Tabel 5. Data setelah dilakukan *Encoding Feature*
+|  | Age | Gender | Weight | Height | Avg_BPM | Calories_Burned | Duration | Frequency | User_ID | BMI | Goal | Workout_Type | Workout_Name | Experience_Level | Workout_ID |
+| ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |
+| 0 | 56 | 0 |  88.3 | 1.71 | 157 | 1.69 | 1313.0 | 4 | 1 | 30.20 | Weight Loss | Cardio | Marathon | 1 | 10 | 
+| 1 | 46 | 1 | 74.9 | 1.53 | 151 | 1.30 | 883.0 | 4 | 2 | 32.00 | Weight Loss | Cardio | Walking | 3 | 4 |
+| 2 | 32 | 1 | 68.1 |1.66 | 122 | 1.11 | 677.0 | 4 | 3 | 24.71 | Flexibility | Flexibility | Zumba | 2 | 12 | 
+| 3 |25 | 0 | 53.2 |1.70 | 164 | 0.59 | 532.0 | 3 | 4 | 18.41 | Weight Gain | Strength | Squat | 2 | 9  |
+| 4 |38 | 0 | 46.1 | 1.79 | 158 |  0.64 | 556.0 | 3 | 5 | 14.39 | Weight Gain | Strength | Push Up | 1 | 7 |
 
 </div>
 
@@ -121,11 +155,11 @@ Data Cleaning merupakan Proses untuk `membersihkan data dari missing value` dan 
 
 ### Data Splitting
 
-*Data Splitting* merupkan proses pembagian data berdasarkan kebutuhan untuk sistem rekomendasi. pada proses ini, data dibagi menjadi 3 yaitu `Data User` yang berisi ragam informasi mengenai user dapat dilihat pada tabel 4, `Data Workout` yang berisi ragam informasi mengenai Workout dapat dilihat pada tabel 5, dan `Data Feedback` sebagai data `rating implisit` dapat dilihat pada tabel 6. 
+*Data Splitting* merupkan proses pembagian data berdasarkan kebutuhan untuk sistem rekomendasi. pada proses ini, data dibagi menjadi 3 yaitu `Data User` yang berisi ragam informasi mengenai user dapat dilihat pada tabel 6, `Data Workout` yang berisi ragam informasi mengenai Workout dapat dilihat pada tabel 7, dan `Data Feedback` sebagai data `rating implisit` dapat dilihat pada tabel 8. 
 
 <div align='center'>
   
-  Tabel 4. Data User
+  Tabel 6. Data User
 |  | User_ID | Age | Gender | Height | Weight | BMI | Goal |
 | ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |
 | 0	| 1	| 56	| 0	| 1.71 | 88.3 | 30.20 |	Weight Loss
@@ -134,28 +168,31 @@ Data Cleaning merupakan Proses untuk `membersihkan data dari missing value` dan 
 | 3	| 4	| 25	| 0 | 1.70 | 53.2 | 18.41 |	Weight Gain
 | 4	| 5	| 38	| 0 | 1.79 | 46.1 | 14.39 |	Weight Gain
 
-  Tabel 5. Data Workout
+</div>
+<div align='center'>
+  
+  Tabel 7. Data Workout
 |  | Workout_ID | Workout_Name | Workout_Type | Experience_Level |
 | ----- | ----- | ----- | ----- |----- |
-| 0	| 4	| Marathon	| Cardio	| 3	|
+| 0	| 10	| Walking	| Cardio	| 1	|
 | 1	| 4	| Marathon	| Cardio	| 3	|
-| 2	| 11	| Yoga	| Flexibility	| 1	|
-| 3	| 1	| Bench Press	| Strength | 3|
-| 4	| 1	| Bench Press	| Strength	| 3	|
+| 2	| 12	| Zumba	| Flexibility	| 2	|
+| 3	| 9	| Squat	| Strength | 2 |
+| 4	| 7	| Push Up	| Strength	| 1	|
 
 </div>
 Pada dataset ini tidak terdapat data rating secara eksplisit seperti penilaian rating 1 hingga 5 terhadap workout yang dilakukan oleh user sehingga perlu data dalam tipe numerik agar dapat digunakan pada metode `Colaborative Filtering`, hal ini yang disebut dengan `data rating secara implisit`. pada dataset terdapat beberapa parameter yang dapat dijadikan data rating seperti `Avg_BPM`, `Calories_Burned`, `Duration`, `Frequency`, dan `Level`. hal ini dapat dilihat pada tabel 6. Parameter diatas telah dinormalisasi menggunakan fungsi `MinMaxScaler` dan rata-rata hasilnya disimpan pada kolom `Aggregate`.
 
 <div align='center'>
   
-  Tabel 6. Data Feedback
+  Tabel 8. Data Feedback
 |  | User_ID | Workout_ID | Workout_Name | Workout_Type | Duration | Calories_Burned | Avg_BPM | Frequency | Level | Aggregate |
 | ----- | ----- | ----- | ----- |----- | ----- | ----- | ----- |----- | ----- | ----- |
-| 0	| 1	| 4	| Marathon	| Cardio	| 0.79	| 0.68	| 0.76	| 0.67	| 1.0	| 0.78	|
+| 0	| 1	| 10	| Walking	| Cardio	| 0.79	| 0.68	| 0.76	| 0.67	| 1.0	| 0.78	|
 | 1	| 2	| 4	| Marathon	| Cardio	| 0.53	| 0.39	| 0.63	| 0.67	| 1.0	| 0.64	|
-| 2	| 3	| 11	| Yoga	| Flexibility	| 0.41	| 0.25	| 0.04	| 0.67	| 0.0	| 0.27	|
-| 3	| 4	| 1	| Bench Press	| Strength | 0.06	| 0.15	| 0.90	| 0.33	| 1.0	| 0.49	|
-| 4	| 5	| 1	| Bench Press	| Strength	| 0.09	| 0.17	| 0.78	| 0.33	| 1.0	| 0.47 |
+| 2	| 3	| 12	| Zumba	| Flexibility	| 0.41	| 0.25	| 0.04	| 0.67	| 0.0	| 0.27	|
+| 3	| 4	| 9	| Squat	| Strength | 0.06	| 0.15	| 0.90	| 0.33	| 1.0	| 0.49	|
+| 4	| 5	| 7	| Push Up	| Strength	| 0.09	| 0.17	| 0.78	| 0.33	| 1.0	| 0.47 |
 
 </div>
 
@@ -174,58 +211,58 @@ Sistem rekomendasi dengan model collaborative filtering memiliki kelebihan denga
 
 Terdapat beberapa kelebihan dan kekurangan dari kedua metode tersebut. CF membutuhkan banyak feedback dari pengguna agar sistem berfungsi dengan baik. Sementara itu, content based filtering membutuhkan deskripsi item/fitur yang baik. oleh karena itu, diperlukan solusi untuk mengatasi hal tersebut yaitu dengan *Hybrid System*.
 
-Perhitungan kemiripan menggunakan fungsi `cosine_similarity` dengan fitur yang digunakan pada proyek ini yakni `durasi`, `jumlah kalori yang terbakar`, `rata-rata BPM`, `frekuensi` dan `level pengalaman user`. Setelah dilakukan perhitungan, sistem rekomendasi menggunakan metode CBF menghasilkan 5 top rekomendasi berdasarkan tingkat pengalaman (*Level Experience*) seperti yang ditunjukkan pada tabel 5.
+Perhitungan kemiripan menggunakan fungsi `cosine_similarity` dengan fitur yang digunakan pada proyek ini yakni `durasi`, `jumlah kalori yang terbakar`, `rata-rata BPM`, `frekuensi` dan `level pengalaman user`. Setelah dilakukan perhitungan, sistem rekomendasi menggunakan metode CBF menghasilkan 5 top rekomendasi berdasarkan tingkat pengalaman (*Level Experience*) seperti yang ditunjukkan pada tabel 9.
 
 <div align='center'>
 
-  Tabel 5. Hasil Rekomendasi metode CBF
+  Tabel 9. Hasil Rekomendasi metode CBF
 |  | Workout_Name | Workout_Type | Level |
 | ----- | ----- | ----- | ----- |
-| 403 | Marathon | Cardio | 1.0 |
-| 4 | Bench Press | Strength | 1.0 |
-| 887 | Bench Press | Strength | 1.0 |
-| 748 | Pilates | Flexibility | 1.0 |
-| 128 | Marathon | Cardio | 1.0 |
+| 345 | Marathon | Cardio | 1.0 |
+| 444 | Pilates | Flexibility | 1.0 |
+| 597 | Pilates | Flexibility | 1.0 |
+| 600 | Pilates | Flexibility | 1.0 |
+| 546 | Pilates | Flexibility | 1.0 |
 
 </div>
 
-Sistem rekomendasi menggunakan metode CF memerlukan fungsi `train_test_split` untuk membagi data menjadi `trainset` dan `testset` yang kemudian dilatih menggunakan model `SVD` dengan metrik evaluasi `RMSE`. Hasil top 10 rekomendasi sistem rekomendasi dapat dilihat pada tabel 6.
+Sistem rekomendasi menggunakan metode CF memerlukan fungsi `train_test_split` untuk membagi data menjadi `trainset` dan `testset` yang kemudian dilatih menggunakan model `SVD` dengan metrik evaluasi `RMSE`. Hasil top 10 rekomendasi sistem rekomendasi dapat dilihat pada tabel 10.
 
 <div align='center'>
 
-  Tabel 6. Hasil Rekomendasi metode CF
-| Top 10 workout recommendations for user: {177} |
+  Tabel 10. Hasil Rekomendasi metode CF
+| Top 10 workout recommendations for user: {643} |
 | ------------------------------ |
 | Marathon: Cardio |
-| Bench Press: Strength |
 | Zumba: Flexibility |
+| Squat: Strength |
+| Yoga: Flexibility |
+| Running: Cardio |
+| Bench Press: Strength |
+| Deadlifts: Strength |
 | Pilates: Flexibility |
 | Cycling: Cardio |
-| Running: Cardio |
-| Walking: Cardio |
-| Deadlifts: Strength |
-| Squat: Strength |
 | Plank: Strength |
 
 </div>
 
-Sistem rekomendasi *hybrid* membutuhkan `hybrid_score` yang merupakan penjumlahan dari `cf score` dan `cbf score` yang masing-masing dikalikan bobotnya. cbf score didapatkan dengan fungsi `cosine_similarity` dab cf score didapatkan dari hasil prediksi model yang dilatih sebelumnya. Pada proyek ini, masing-masing bobot diatur sebesar `0.7` untuk cf score dan `0.3` untuk cbf score. hasil rekomendasi top 10 rekomendasi sistem hybrid dapat dilihat pada tabel 7.
+Sistem rekomendasi *hybrid* membutuhkan `hybrid_score` yang merupakan penjumlahan dari `cf score` dan `cbf score` yang masing-masing dikalikan bobotnya. cbf score didapatkan dengan fungsi `cosine_similarity` dab cf score didapatkan dari hasil prediksi model yang dilatih sebelumnya. Pada proyek ini, masing-masing bobot diatur sebesar `0.7` untuk cf score dan `0.3` untuk cbf score. hasil rekomendasi top 10 rekomendasi sistem hybrid dapat dilihat pada tabel 11.
 
 <div align='center'>
 
-  Tabel 6. Hasil Rekomendasi metode CF
+  Tabel 11. Hasil Rekomendasi metode hybrid
 | Showing recommendation for user: {1} |
 | ----------------------------------- |
+| Walking: Cardio |
 | Marathon: Cardio |
+| Zumba: Flexibility |
+| Push Up: Strength |
 | Yoga: Flexibility |
+| Running: Cardio |
 | Bench Press: Strength |
+| Deadlifts: Strength |
 | Pilates: Flexibility |
 | Cycling: Cardio |
-| Running: Cardio |
-| Push Up: Strength |
-| Walking: Cardio |
-| Deadlifts: Strength |
-| Squat: Strength |
 
 </div>
 
@@ -261,7 +298,7 @@ Dimana:
 
 <div align='center'>
   
-![image](https://github.com/user-attachments/assets/9525d2cf-6390-4bf1-a7b8-cd33be9ccab1)
+![image](https://github.com/user-attachments/assets/440cbb13-8327-4b47-b052-162c2443ce4a)
 
 Gambar 2. Grafik Evaluasi RMSE
 
@@ -270,7 +307,7 @@ Gambar 2. Grafik Evaluasi RMSE
 ## Conclusion
 Dari hasil evaluasi diatas, dapat disimpulkan:
 1. Data rating dapat digantikan oleh parameter lain seperti `Avg_BPM`, `Calories_Burned`, `Duration`, `Frequency`, dan `Level` untuk kasus rekomendasi workout.
-2. Model dengan metoda Content Based Filtering memiliki peforma yang baik dengan tingkat presisi `100%` dan metoda Colaborative Filtering memiliki nilai metrik RMSE `0.1274` untuk trainset dan `0.1498` untuk testset.
+2. Model dengan metoda Content Based Filtering memiliki peforma yang baik dengan tingkat presisi `100%` dan metoda Colaborative Filtering memiliki nilai metrik RMSE `0.1242` untuk trainset dan `0.1503` untuk testset.
 
 ## References
 [1] Adomavicius, G., & Tuzhilin, A. (2005). Toward the Next Generation of Recommender Systems: A Survey of the State-of-the-Art and Possible Extensions. IEEE Transactions on Knowledge and Data Engineering.
