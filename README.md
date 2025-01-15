@@ -150,9 +150,6 @@ Pada tahap ini, data pada fitur `Gender` diubah dari data string menjadi data nu
 
 </div>
 
-### Data Cleaning
-Data Cleaning merupakan Proses untuk `membersihkan data dari missing value` dan `data duplikat` yang dapat mempengaruhi peforma model *machine learning*. Setelah dilakukan pemeriksaan menggunakan fungsi `isnull().sum()` dan `duplicated().sum()`, tidak terdapat missing value maupun data duplikasi pada dataset.
-
 ### Data Splitting
 
 *Data Splitting* merupkan proses pembagian data berdasarkan kebutuhan untuk sistem rekomendasi. pada proses ini, data dibagi menjadi 3 yaitu `Data User` yang berisi ragam informasi mengenai user dapat dilihat pada tabel 6, `Data Workout` yang berisi ragam informasi mengenai Workout dapat dilihat pada tabel 7, dan `Data Feedback` sebagai data `rating implisit` dapat dilihat pada tabel 8. 
